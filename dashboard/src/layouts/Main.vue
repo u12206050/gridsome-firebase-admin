@@ -17,10 +17,6 @@
             <i class="material-icons">dashboard</i>
             <span slot="title">Dashboard</span>
           </el-menu-item>
-          <!--el-menu-item index="/billing">
-            <i class="material-icons">payment</i>
-            <span slot="title">Billing</span>
-          </el-menu-item-->
           <el-menu-item index="/profile">
             <i class="el-icon-user"></i>
             <span slot="title">Profile</span>
