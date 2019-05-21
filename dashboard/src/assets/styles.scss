@@ -1,0 +1,100 @@
+html {
+  --primary: #3BBA95;
+  --primary-faded: rgb(59, 186, 149, 0.1);
+  --primary-light: #01ffb5;
+  --dark: #393939;
+  --gray: #848484;
+  --light: #F3F7F9;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+}
+
+body {
+  margin: 0;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--color-white);
+}
+
+a {
+  text-decoration: none;
+  /*display: inline-block;*/
+  transition: .4s transform;
+
+  &:hover {
+    transform: scale(1.04);
+  }
+}
+
+.banner {
+  img, h1 {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  h1 {
+    color: var(--primary);
+    font-size: 50px;
+    line-height: 1;
+    margin: 0;
+  }
+
+  img {
+    height: 100%;
+    margin: 0;
+  }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .4s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.slide-enter-active, .slide-leave-active {
+  transition: transform .6s, opacity .4s;
+}
+.slide-enter {
+  position: absolute;
+  opacity: 0;
+  transform: translateX(100%);
+}
+.slide-leave-to {
+  position: absolute;
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.document-form-dialog {
+  .el-dialog {
+    min-width: 380px;
+    width: 480px;
+    max-width: 90%;
+  }
+}
+
+::selection {
+  background: var(--light);
+}
+::-moz-selection {
+  background: var(--light);
+}
+
+.secondary-theme {
+  background-color: var(--light);
+  color: #000;
+
+  .el-button--text {
+    color: var(--primary);
+
+    &:hover {
+      color: var(--primary);
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "gridsome-firebase-admin",
+  "version": "0.1.0",
+  "description": "A Firestore Headless CMS built on Gridsome",
+  "main": "dashboard",
+  "dependencies": {
+    "firestore-rulez": "^0.1.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "compile": "firestore-rulez",
+    "deploy": "firestore-rulez && firebase deploy --only firestore:rules"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/u12206050/gridsome-firebase-admin.git"
+  },
+  "keywords": [
+    "Firebase",
+    "Gridsome",
+    "Firestore",
+    "Headless",
+    "CMS"
+  ],
+  "author": "Gerard Lamusse",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/u12206050/gridsome-firebase-admin/issues"
+  },
+  "homepage": "https://github.com/u12206050/gridsome-firebase-admin#readme"
+}

@@ -1,0 +1,156 @@
+service cloud.firestore {
+	match /databases/{database}/documents {
+//service cloud.firestore {
+//match /databases/{database}/documents {
+    match /{document=**} {
+      allow read: if userHasRole('admin')
+      allow write: if userHasRole('superadmin')
+    }
+//}
+//}
+//service cloud.firestore {
+//match /databases/{database}/documents {
+    // Is the user logged in?
+    function isSignedIn() {
+      return request.auth != null
+    }
+    // Does the given id match the logged in user's uid?
+    function isUserId(id) {
+      return isSignedIn() && request.auth.uid == id
+    }
+    // Is the given field a reference of the current user
+    function isUserRef(field) {
+      return field in resource.data && resource.data[field] == /databases/$(database)/documents/users/$(request.auth.uid)
+    }
+    // Is user id a key in the given map
+    function userInMap(map) {
+      return request.auth.uid in map.keys()
+    }
+    // Does user have the given role in the given map
+    function userWithRole(map, role) {
+      return userInMap(map)
+        && map[request.auth.uid] == role
+    }
+    // Only use after checking if the field exists
+    function val(field) {
+      return request.resource.data[field];
+    }
+    // Do only these fields exist on the document?
+    function allowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields)
+    }
+    // Have any of these fields changed?
+    function hasNotChanged(fields) {
+      return (fields.size() < 1 || equals(fields[0]))
+        && (fields.size() < 2 || equals(fields[1]))
+        && (fields.size() < 3 || equals(fields[2]))
+        && (fields.size() < 4 || equals(fields[3]))
+        && (fields.size() < 5 || equals(fields[4]))
+        && (fields.size() < 6 || equals(fields[5]))
+        && (fields.size() < 7 || equals(fields[6]))
+        && (fields.size() < 8 || equals(fields[7]))
+        && (fields.size() < 9 || equals(fields[8]));
+    }
+    // Is this field unchanged?
+    function equals(field) {
+      return field in request.resource.data
+        && field in resource.data
+        && val(field) == resource.data[field]
+    }
+
+    // TYPES
+    function isString(field) { return isValueString(val(field)) }
+    function isValueString(value) {
+      return string(value) == value;
+    }
+    function isInteger(field) { return isValueInteger(val(field)) }
+    function isValueInteger(value) {
+      return integer(value) == value;
+    }
+    function isFloat(field) { return isValueFloat(val(field)) }
+    function isValueFloat(value) {
+      return float(value) == value;
+    }
+    function isBool(field) { return isValueBool(val(field)) }
+    function isValueBool(value) {
+      return boolean(value) == value;
+    }
+    function isTimestamp(field) { return isValueTimestamp(val(field)) }
+    function isValueTimestamp(value) {
+      return value.toMillis() > 0;
+    }
+
+    // Check the field's length. Use 0 to ignore upper or lower limit
+    function hasLength(field, min, max) { return hasValueLength(val(field), min, max) }
+    function hasValueLength(value, min, max) {
+      return isString(value)
+        && (min == 0 || value.size() >= min)
+        && (max == 0 || value.size() <= max);
+    }
+    // Is field's value within the given range, inclusive
+    function inRange(field, min, max) { return valueInRange(val(field), min, max) }
+    function valueInRange(value, min, max) {
+      return value >= min && value <= max;
+    }
+    // Use to check for optional values
+    function isNull(field) { return isValueNull(val(field)) }
+    function isValueNull(value) {
+      return value == null;
+    }
+
+    function isEmail(field) { return isValueEmail(val(field)) }
+    function isValueEmail(value) {
+      return isValueString(value) && value.matches("[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}");
+    }
+
+    function createdWith(fields) {
+      return request.resource.data.size() == fields.size() && request.resource.data.keys().hasOnly(fields)
+    }
+
+    function matches(field, value) {
+      return field in request.resource.data
+        && request.resource.data[field] == value
+    }
+
+    function isUser(userField) {
+      return userField in resource.data && resource.data[userField] == /databases/$(database)/documents/users/$(request.auth.uid)
+    }
+
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data
+    }
+
+    // Roles Fn
+
+    function userHasRole(role) {
+      return isSignedIn() && role in request.auth.token && request.auth.token[role] == true
+    }
+
+    // Data Fn
+
+    function existingData() {
+      return resource.data
+    }
+
+    function incomingData() {
+      return request.resource.data
+    }
+
+    function currentUser() {
+      return request.auth
+    }
+//}
+//}
+//service cloud.firestore {
+//match /databases/{database}/documents {
+    match /users/{userId} {
+      allow list: if false
+      allow get: if isSignedIn()
+      allow update: if isUserId(userId)
+        && allowedFields(['email', 'fullname', 'image', 'roles', 'created'])
+        && hasNotChanged(['email', 'image', 'roles', 'created']);
+    }
+//}
+//}
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "admin",
+  "private": true,
+  "scripts": {
+    "start": "gridsome develop",
+    "build": "gridsome build",
+    "develop": "gridsome develop",
+    "explore": "gridsome explore",
+    "deploy": "gridsome build && cd .. && rm -rf ./public/* && cp -rf dashboard/dist/* public/ && firebase deploy --only hosting"
+  },
+  "dependencies": {
+    "element-ui": "^2.8.2",
+    "firebase": "^5.11.0",
+    "firebaseui": "^3.6.0",
+    "gridsome": "^0.6.2",
+    "jvectormap-next": "^3.0.0",
+    "lodash.isequal": "^4.5.0",
+    "tiptap": "^1.19.8",
+    "tiptap-extensions": "^1.19.10",
+    "uuidv4": "^4.0.0",
+    "vue-stack-grid": "^1.0.4",
+    "vue-stripe-elements-plus": "^0.2.9",
+    "vue2-google-maps": "^0.10.6",
+    "vuex": "^3.1.0",
+    "vuex-router-sync": "^5.0.0"
+  },
+  "devDependencies": {
+    "node-sass": "^4.12.0",
+    "sass-loader": "^7.1.0",
+    "style-resources-loader": "^1.2.1"
+  }
+}
