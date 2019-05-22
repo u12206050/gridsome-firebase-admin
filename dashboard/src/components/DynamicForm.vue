@@ -6,7 +6,7 @@
       <el-popover placement="bottom" style="float: left" :title="doc.__key__" width="300" trigger="click">
         <el-button slot="reference">View ID</el-button>
       </el-popover>
-      <el-button type="submit" :loading="busy" @click="confirm">{{type === 'Create' ? 'Lag ny' : 'Lagre'}}</el-button>
+      <el-button type="submit" :loading="busy" @click="confirm">{{type === 'Create' ? 'Create' : 'Save'}}</el-button>
     </div>
   </el-form>
 </template>
