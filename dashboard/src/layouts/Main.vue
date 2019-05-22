@@ -1,6 +1,5 @@
 <template>
   <div id="app" class="page-container md-layout-row">
-    <Login v-show="!isLoggedIn" />
     <el-container v-if="isLoggedIn"
       v-loading="!isAdmin"
       :element-loading-text="loadingMsg"
@@ -34,7 +33,7 @@
         <el-header class="secondary-theme main">
           <el-row type="flex" justify="space-between">
             <g-link to="/" style="height: 40px; display: inline-block">
-              <g-image src="~/assets/logo.svg" width="202px" height="40px" alt="CityFlow Logo" class="logo"></g-image>
+              <g-image src="~/assets/logo-light.svg" width="120" height="49px" alt="Firesome Logo" class="logo"></g-image>
             </g-link>
             <el-col :span="12" style="text-align: right; margin-right: 20px">
               <el-row type="flex" style="align-items: center;" justify="end">
@@ -63,7 +62,6 @@
 
 <script>
 import { firebase, db } from '~/fire'
-import Login from '~/components/Login'
 import Gallery from '~/components/Gallery'
 
 import COLLECTION_TYPES from '~/model/collections'
@@ -76,7 +74,7 @@ export default {
       cTypes: COLLECTION_TYPES
     }
   },
-  components: {Gallery, Login},
+  components: {Gallery},
   computed: {
     isLoggedIn () {
       return this.$auth.isLoggedIn
@@ -98,8 +96,9 @@ export default {
       return 'Loading...'
     }
   },
+  authSub: null,
   mounted () {
-   /*auth.onAuthStateChanged((auth) => {
+    this.authSub = auth.onAuthStateChanged((auth) => {
       if (auth && !auth.emailVerified) {
         setTimeout(() => {
           this.$message({
@@ -109,14 +108,22 @@ export default {
             showClose: true
           })
         }, 2000)
+      } else {
+        this.$router.push('/login')
       }
-    })*/
+    })
   },
   methods: {
     logout () {
       this.$auth.signOut()
     }
-  }
+  },
+  beforeDestroy() {
+    this.authSub && this.authSub()
+  },
+  created() {
+    if (!this.isLoggedIn) this.$router.push('/login')
+  },
 }
 </script>
 

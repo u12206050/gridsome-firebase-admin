@@ -1,5 +1,4 @@
-//service cloud.firestore {
-//match /databases/{database}/documents {
+// Users.rules
     match /users/{userId} {
       allow list: if false
       allow get: if isSignedIn()
@@ -7,5 +6,3 @@
         && allowedFields(['email', 'fullname', 'image', 'roles', 'created'])
         && hasNotChanged(['email', 'image', 'roles', 'created']);
     }
-//}
-//}

@@ -1,6 +1,6 @@
 <script>
 import * as UUID from 'uuidv4'
-import {uploadFile, getFileName, db, Timestamp} from '@/fire'
+import {uploadFile, getFileName, Timestamp} from '@/fire'
 
 export default {
   name: 'Upload',
@@ -39,7 +39,7 @@ export default {
         message: 'Bildet lastet opp...',
         type: 'info'
       })
-      db.collection('media').doc(meta.uuid).onSnapshot(sMedia => {
+      this.$db.collection('media').doc(meta.uuid).onSnapshot(sMedia => {
         if (sMedia.exists) {
           this.uploadProgress = 0
 

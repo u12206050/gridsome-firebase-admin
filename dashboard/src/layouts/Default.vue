@@ -4,7 +4,7 @@
       <el-header class="secondary-theme main">
         <el-row type="flex" justify="space-between">
           <g-link to="/" style="height: 40px; display: inline-block">
-            <g-image  src="~/assets/logo.svg" width="202px" height="40px" alt="CityFlow Logo" class="logo"></g-image>
+            <g-image  src="~/assets/logo-light.svg" width="120" height="49px" alt="Firesome Logo" class="logo"></g-image>
           </g-link>
         </el-row>
       </el-header>

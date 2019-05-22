@@ -22,8 +22,8 @@
         </el-col>
         <el-col :span="4" :md="6" :sm="8" :xs="12">
           <div class="scrollable">
-            <h3>Last opp nytt bilde</h3>
-            <h5 v-if="isPrivate" style="color: red; margin: 0">Laster opp bruker bilder</h5>
+            <h3>Upload a new Image</h3>
+            <h5 v-if="isPrivate" style="color: red; margin: 0">Upload user image</h5>
             <el-upload
               drag
               multiple
@@ -35,8 +35,8 @@
               :before-upload="beforeImageUpload">
               <el-progress v-if="uploadProgress" type="circle" :percentage="uploadProgress" color="blue"></el-progress>
               <i v-if="!uploadProgress" class="el-icon-upload"></i>
-              <div v-if="!uploadProgress" class="el-upload__text">Dra og slipp filer her eller <em>klikk for å laste opp</em></div>
-              <div class="el-upload__tip" slot="tip">jpg/png filer med en størrelse mindre enn 16mb</div>
+              <div v-if="!uploadProgress" class="el-upload__text">Drag and drop image or <em>click to select</em></div>
+              <div class="el-upload__tip" slot="tip">Only jpg/png images allowed upto 16mb in size</div>
             </el-upload>
             <hr />
             <div v-if="selected">
@@ -45,12 +45,12 @@
               <h5>Dimensions: {{selected.size.w}} x {{selected.size.h}}</h5>
               <h5>Owner: {{auth.uid === selected.uid ? auth.displayName : '––––'}}</h5>
               <el-input :placeholder="selected.name || 'Navn'" v-model="selected.__newName" v-on:keyup.enter="changeName(selected)">
-                <el-button slot="append" type="success" icon="el-icon-check" @click="changeName(selected)" v-loading="selected.updating">Endre</el-button>
+                <el-button slot="append" type="success" icon="el-icon-check" @click="changeName(selected)" v-loading="selected.updating">Update</el-button>
               </el-input>
             </div>
           </div>
           <div class="actions" v-if="selected && gallery.onSelect">
-            <el-button type="success" icon="el-icon-check" :disabled="selected.private !== isPrivate" round @click="select">Velg</el-button>
+            <el-button type="success" icon="el-icon-check" :disabled="selected.private !== isPrivate" round @click="select">Choose</el-button>
           </div>
         </el-col>
       </el-row>
@@ -209,19 +209,12 @@ export default {
       img.removing = true
       var imgRef = this.$storage.ref(img.path);
 
-      imgRef.delete().then(() => {
-        img.__ref__.delete().then(() => {
-          this.$message({
-            message: 'Fjernet Bildet',
-            type: 'success'
-          })
-          this.selected = null
-        })
-      }).catch((error) => {
+      imgRef.delete().catch((error) => {
         console.warn(error.message)
+      }).then(() => {
         img.__ref__.delete().then(() => {
           this.$message({
-            message: 'Fjernet Bildet',
+            message: 'Image deleted',
             type: 'success'
           })
           this.selected = null
@@ -236,7 +229,7 @@ export default {
         img.__newName = ''
         img.updating = false
         this.$message({
-          message: 'Navn endret',
+          message: 'Name changed',
           type: 'success'
         })
       })

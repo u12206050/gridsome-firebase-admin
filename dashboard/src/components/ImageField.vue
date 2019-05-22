@@ -1,6 +1,6 @@
 <template>
   <el-button class="ImageField" :disabled="disabled" @click="selectImage">
-    <span v-if="!syncValue">Velg bilde</span>
+    <span v-if="!syncValue">Choose bilde</span>
     <img v-else :src="syncValue"/>
   </el-button>
 </template>

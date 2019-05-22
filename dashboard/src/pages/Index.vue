@@ -1,7 +1,10 @@
 <template>
   <Layout>
-    <h1></h1>
-    <g-link to="/dashboard">Dashboard</g-link>
+    <div class="Page Page-Index">
+      <h1></h1>
+      <g-link to="/login">Login</g-link>
+      <g-link to="/dashboard">Dashboard</g-link>
+    </div>
   </Layout>
 </template>
 

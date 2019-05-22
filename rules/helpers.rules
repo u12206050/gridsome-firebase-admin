@@ -1,5 +1,4 @@
-//service cloud.firestore {
-//match /databases/{database}/documents {
+// Helpers.rules
     // Is the user logged in?
     function isSignedIn() {
       return request.auth != null
@@ -129,5 +128,3 @@
     function currentUser() {
       return request.auth
     }
-//}
-//}

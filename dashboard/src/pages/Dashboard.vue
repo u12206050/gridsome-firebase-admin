@@ -1,6 +1,6 @@
 <template>
   <Main>
-    <div id="dashboard">
+    <div id="dashboard" class="Page Page-Dashboard">
       <el-row :router="true">
         <el-col :span="4" :lg="6" :md="8" :sm="12" :xs="24">
           <router-link to="/product_types">
@@ -43,7 +43,7 @@
           </router-link>
         </el-col>
         <el-col :span="4" :lg="6" :md="8" :sm="12" :xs="24">
-          <el-button icon="el-icon-picture-outline" @click="$store.gallery = {visible: true}" class="actioncard" style="width: 100%; background: #fff; color: #3BBA95"><h2>Galleri</h2></el-button>
+          <el-button icon="el-icon-picture-outline" @click="$store.gallery = {visible: true}" class="actioncard" style="width: 100%; background: #fff; color: #3BBA95"><h2>Gallery</h2></el-button>
         </el-col>
       </el-row>
     </div>
