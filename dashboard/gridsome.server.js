@@ -5,7 +5,16 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 const COLLECTION_NAMES = [
-  'authors', 'posts', 'tags', 'topics', 'users'
+  'attributes',
+  'authors',
+  'categories',
+  'posts/*/comments',
+  'posts',
+  'products',
+  'products/*/reviews',
+  'tags',
+  'topics',
+  'users',
 ]
 
 module.exports = function (api) {
@@ -13,12 +22,11 @@ module.exports = function (api) {
     // Use the Data store API here: https://gridsome.org/docs/data-store-api
 
     const collections = store.addContentType({
-      typeName: 'Collections',
-      route: '/:collection*'
+      typeName: 'Collections'
     })
 
     COLLECTION_NAMES.forEach(cName => {
-      collections.addNode({ collection: cName })
+      collections.addNode({ path: cName })
     })
   })
 }

@@ -10,7 +10,7 @@
 
         <el-button class="sort-switch" type="text" circle v-bind:class="{ toggle: sortAsc > 0 }" :title="sortAsc > 0 ? 'Sort Descending' : 'Sort Ascending'" icon="el-icon-sort" @click="sortAsc *= -1, onSortSearch()"></el-button>
 
-        <el-button v-if="parent"><router-link :to="`/admin/${parent.url}?id=${parentId}`">⇡ {{parent.label}}</router-link></el-button>
+        <el-button v-if="parent"><router-link :to="`/${parent.url}?id=${parentId}`">⇡ {{parent.label}}</router-link></el-button>
       </el-col>
       <el-col :span="6" style="text-align: center;" class="hidden-sm-and-down">
         <div class="grid-content" v-show="selectedDocs.length">{{selected}} selected</div>
@@ -43,7 +43,7 @@
       <template v-for="(sub, sIndex) in subs">
         <el-table-column :key="sIndex" :label="sub.label">
           <template slot-scope="scope">
-            <router-link :to="`/admin/${collection}/${scope.row.__key__}/${sub.collection().url}`">⇢</router-link>
+            <router-link :to="`/${collection}/${scope.row.__key__}/${sub.collection().url}`">⇢</router-link>
           </template>
         </el-table-column>
       </template>

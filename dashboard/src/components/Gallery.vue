@@ -16,7 +16,7 @@
               <div class="vsg-stack-item" v-for="(img, i) in filtered" :key="i">
                 <figure :class="{selected: img === selected, removing: img.removing}"
                   @click="selected = img">
-                  <img :src="img.url">
+                  <img :src="img.url" @load="imageLoaded">
                   <figcaption>{{img.name || img.file.name}}</figcaption>
                 </figure>
               </div>
@@ -134,7 +134,6 @@
 <script>
 import Upload from './bases/Upload'
 import StackGrid from 'vue-stack-grid-component'
-import { setTimeout } from 'timers';
 
 let delay
 export default {
@@ -146,6 +145,7 @@ export default {
   data () {
     return {
       images: [],
+      imagesLoaded: 0,
       filtered: [],
       query: '',
       uploaded: null,
@@ -199,13 +199,19 @@ export default {
         images.forEach(img => {
           img.file = this.$storage.ref(img.path)
         })
+        this.imagesLoaded = images.length
         this.onFilter()
         this.privateView = this.isPrivate
         this.colWidth = 219
-        setTimeout(() => {
-          this.colWidth = 220
-        }, 100)
       })
+    },
+    imageLoaded () {
+      if (--this.imagesLoaded < 1) {
+        this.imagesLoaded = 0
+        this.$nextTick(() => {
+          this.colWidth = 220
+        })
+      }
     },
     remove (img) {
       img.removing = true

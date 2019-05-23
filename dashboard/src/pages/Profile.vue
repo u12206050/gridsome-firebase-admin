@@ -116,7 +116,7 @@ export default {
               photoURL: this.form.image
             }).then(() => {
               if (!userData.email) {
-                this.$db.collection('users').doc(this.authUser.uid).set(userData, { update: true }).then(() => {
+                this.$db.collection('users').doc(this.authUser.uid).set(userData, { merge: true }).then(() => {
                   this.$message({
                     message: 'Navn er oppdatert',
                     type: 'success'
@@ -137,7 +137,7 @@ export default {
           }
 
           if (!this.user || (this.form.email !== this.authUser.email || this.form.email !== this.user.email)) {
-            this.authUser.reauthenticateWithPopup(firebase.auth.GoogleAuthProvider.PROVIDER_ID).then((res) => {
+            this.authUser.reauthenticateWithPopup(firebase.auth.GoogleAuthProvider).then((res) => {
               userData.email = this.form.email
               this.setBusy(2)
               this.authUser.updateEmail(this.form.email).then(() => {

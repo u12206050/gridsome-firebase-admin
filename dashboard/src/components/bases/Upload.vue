@@ -36,19 +36,18 @@ export default {
     },
     onUploadSuccess (url, path, meta) {
       this.$message({
-        message: 'Image uploaded...',
+        message: 'Image uploaded... Optimizing',
         type: 'info'
       })
-      this.$db.collection('media').doc(meta.uuid).onSnapshot(sMedia => {
+      const unsub = this.$db.collection('media').doc(meta.uuid).onSnapshot(sMedia => {
         if (sMedia.exists) {
+          unsub()
           this.uploadProgress = 0
-
-          const url = sMedia.getUrl()
           this.$message({
             message: 'Image optimized',
             type: 'info'
           })
-          this.$emit('uploaded', url)
+          this.$emit('uploaded', sMedia.data().url)
         }
       })
     },

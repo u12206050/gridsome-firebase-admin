@@ -1,24 +1,24 @@
 import loadasync, { defs } from '~/model/loadasync'
 
-loadasync('comments')
-loadasync('authors')
-loadasync('topics')
+loadasync('reviews')
+loadasync('attributes')
+loadasync('categories')
 loadasync('tags')
 
-const posts = {
-  collection: 'posts',
-  singular: 'post',
-  plural: 'posts',
-  title: 'Posts',
-  icon: 'el-icon-document',
+const products = {
+  collection: 'products',
+  singular: 'product',
+  plural: 'products',
+  title: 'Products',
+  icon: 'el-icon-table-lamp',
   actions: {
     canCreate: true,
     canDelete: true
   },
   subs: [{
-    label: 'Comments',
+    label: 'Reviews',
     collection() {
-      return defs.comments
+      return defs.reviews
     }
   }],
   fields: [
@@ -27,6 +27,19 @@ const posts = {
       label: 'ID',
       type: 'hidden',
       readonly: true
+    },
+    {
+      key: 'sku',
+      label: 'Sku',
+      type: 'text',
+      width: 120,
+      rules: [
+        {
+          type: 'string',
+          required: true,
+          message: 'Sku is required'
+        }
+      ]
     },
     {
       key: 'title',
@@ -78,19 +91,6 @@ const posts = {
       ]
     },
     {
-      key: 'author',
-      label: 'Author',
-      type: 'reference',
-      collection () {
-        return defs.authors
-      },
-      reference: {
-        key: 'fname',
-        label: 'Full name',
-        type: 'text'
-      }
-    },
-    {
       key: 'gallery',
       label: 'Gallery',
       type: 'array',
@@ -127,16 +127,60 @@ const posts = {
       }
     },
     {
-      key: 'topic',
-      label: 'Topic',
-      type: 'reference',
-      collection () {
-        return defs.topics
+      key: 'categories',
+      label: 'Categories',
+      type: 'array',
+      width: 100,
+      array: {
+        key: '__index__',
+        label: 'Category',
+        type: 'reference',
+        collection () {
+          return defs.categories
+        },
+        reference: {
+          key: 'name',
+          label: 'Name',
+          type: 'text'
+        }
+      }
+    },
+    {
+      key: 'attributes',
+      label: 'Attributes',
+      type: 'map',
+      width: 100,
+      title (field, obj) {
+        return Object.keys(obj).length
       },
-      reference: {
-        key: 'name',
-        label: 'Name',
-        type: 'text'
+      display (field, obj) {
+        const o = Object.keys(obj).map(id => {
+          return obj[id]
+        })
+        return o.join('<br>')
+      },
+      map: {
+        heading: {
+          key: 'Attribute',
+          value: 'Value'
+        },
+        key: {
+          key: '__index__',
+          type: 'reference',
+          collection () {
+            return defs.attributes
+          },
+          reference: {
+            key: 'name',
+            label: 'Name',
+            type: 'text'
+          }
+        },
+        value: {
+          key: '__index__',
+          label: '',
+          type: 'text'
+        }
       }
     },
     {
@@ -148,4 +192,4 @@ const posts = {
   ]
 }
 
-export default posts
+export default products

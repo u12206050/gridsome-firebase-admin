@@ -20,7 +20,7 @@ export default {
   computed: {
     syncValue: {
       get() {
-        if (typeof this.value === 'object') {
+        if (this.value && typeof this.value === 'object') {
           if (this.value.constructor === firebase.firestore.Timestamp)
             return this.value.toDate()
           return this.value

@@ -3,7 +3,7 @@
     <DynamicField v-for="(field, fIndex) in fields" :doc="doc" :key="fIndex" v-model="doc[field.key]" :field="field" :disabled="busy || !!(type === 'Create' && field.relations)" :isInvalid="errors[field.key]" />
     <hr/>
     <div style="text-align: right">
-      <el-popover placement="bottom" style="float: left" :title="doc.__key__" width="300" trigger="click">
+      <el-popover v-if="doc.__key__" placement="bottom" style="float: left" :title="doc.__key__" width="300" trigger="click">
         <el-button slot="reference">View ID</el-button>
       </el-popover>
       <el-button type="submit" :loading="busy" @click="confirm">{{type === 'Create' ? 'Create' : 'Save'}}</el-button>
@@ -77,18 +77,26 @@ export default {
     },
     isValid(rules) {
       let isValid = true
+      this.errors = {}
       this.fields.forEach(field => {
         if (Array.isArray(field.rules)) {
           let validator = new Schema({[field.key]: field.rules})
           validator.validate(this.doc, (errors, fields) => {
-            this.errors = {}
-            if(errors) {
+            if(errors && errors.length) {
               isValid = false
               errors.forEach(err => {
                 this.errors[err.field] = err.message
               })
             }
           })
+        } else if (typeof field.rules === 'function') {
+          let errors = field.rules(this.doc)
+          if(errors && errors.length) {
+            isValid = false
+            errors.forEach(err => {
+              this.errors[err.field] = err.message
+            })
+          }
         }
       })
       return isValid
