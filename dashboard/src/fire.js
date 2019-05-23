@@ -91,22 +91,23 @@ if (typeof window !== 'undefined') {
  * @param {Function} onComplete : Executed when the file uploaded successfully
  * @param {Function} onError : Executed when an error occured
  * @param {Function} onProgress : Executed on progress update, percentage parameter given as argument
+ * @param {Object} meta : customMetadata to be added to the file
  */
-export const uploadFile = function (path, file, onComplete, onError, onProgress) {
+export const uploadFile = function (path, file, onComplete, onError, onProgress, meta = null) {
   path = path.replace(/^\/+|\/+$/g, '')
   if (!path || !file || !onComplete) {
     onError('Invalid execution')
     return
   }
-  var storageRef = storage.ref(path)
+  const storageRef = storage.ref(path)
 
-  var task = storageRef.put(file)
-
-  task.on('state_changed',
+  storageRef.put(file, {
+    customMetadata: meta
+  }).on('state_changed',
     (snapshot) => { onProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100) },
     onError,
     () => {
-      storageRef.getDownloadURL().then(url => onComplete(url, storageRef.fullPath)).catch(onError)
+      storageRef.getDownloadURL().then(url => onComplete(url, storageRef.fullPath, meta)).catch(onError)
     }
   )
 }

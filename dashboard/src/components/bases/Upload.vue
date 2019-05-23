@@ -36,7 +36,7 @@ export default {
     },
     onUploadSuccess (url, path, meta) {
       this.$message({
-        message: 'Bildet lastet opp...',
+        message: 'Image uploaded...',
         type: 'info'
       })
       this.$db.collection('media').doc(meta.uuid).onSnapshot(sMedia => {
@@ -45,14 +45,15 @@ export default {
 
           const url = sMedia.getUrl()
           this.$message({
-            message: 'Bildet er klar',
+            message: 'Image optimized',
             type: 'info'
           })
           this.$emit('uploaded', url)
         }
       })
     },
-    onUploadError () {
+    onUploadError (err) {
+      console.warn(err)
       this.uploadProgress = 0
       this.$message({
         message: 'Failed upoading the image',

@@ -3,7 +3,7 @@
     <div id="dashboard" class="Page Page-Dashboard">
       <el-row :router="true">
         <el-col :span="4" :lg="6" :md="8" :sm="12" :xs="24">
-          <router-link to="/product_types">
+          <router-link to="/authors">
             <el-card class="actioncard" shadow="hover">
               <i class="el-icon-user-solid"></i>
               <h2>Authors</h2>

@@ -3,7 +3,6 @@
 
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
-const nodeExternals = require('webpack-node-externals')
 const path = require('path')
 
 function addStyleResource (rule) {
@@ -20,6 +19,9 @@ module.exports = {
   siteName: 'Gridsome Admin',
   plugins: [],
   chainWebpack (config, { isServer }) {
+    if (isServer) {
+      config.externals([/^(vue|vue-router)$/])
+    }
     const types = ['vue-modules', 'vue', 'normal-modules', 'normal']
     types.forEach(type => addStyleResource(config.module.rule('scss').oneOf(type)))
   }

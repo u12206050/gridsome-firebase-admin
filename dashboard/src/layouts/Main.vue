@@ -48,11 +48,15 @@
           <transition name="fade" mode="out-in">
             <slot></slot>
           </transition>
-          <Gallery />
+          <ClientOnly>
+            <Gallery />
+          </ClientOnly>
         </el-main>
 
         <el-footer class="main">
-          <el-row>
+          <el-row type="flex" justify="space-between">
+            <p>Developed by <a href="https://day4.no" style="color: black"><b>DAY4_</b></a></p>
+            <p>Powered by <a href="https://gridsome.org" style="color: green">Gridsome</a> & <a href="https://firebase.google.com" style="color: orangered">Firebase</a></p>
           </el-row>
         </el-footer>
       </el-container>
@@ -74,7 +78,7 @@ export default {
       cTypes: COLLECTION_TYPES
     }
   },
-  components: {Gallery},
+  components: { Gallery },
   computed: {
     isLoggedIn () {
       return this.$auth.isLoggedIn
@@ -96,33 +100,31 @@ export default {
       return 'Loading...'
     }
   },
-  authSub: null,
-  mounted () {
-    this.authSub = auth.onAuthStateChanged((auth) => {
-      if (auth && !auth.emailVerified) {
-        setTimeout(() => {
-          this.$message({
-            message: 'Verification required, Please verify your email！',
-            duration: 30000,
-            type: 'warning',
-            showClose: true
-          })
-        }, 2000)
-      } else {
-        this.$router.push('/login')
+  watch: {
+    '$auth.isLoggedIn': {
+      immediate: true,
+      handler(loggedIn) {
+        if (!loggedIn) {
+          this.$store.hasShown = false
+          this.$router.push('/login')
+        } else if (!this.$store.hasShown && !this.$auth.emailVerified) {
+          this.$store.hasShown = true
+          setTimeout(() => {
+            this.$message({
+              message: 'Verification required, Please verify your email！',
+              duration: 30000,
+              type: 'warning',
+              showClose: true
+            })
+          }, 2000)
+        }
       }
-    })
+    }
   },
   methods: {
     logout () {
       this.$auth.signOut()
     }
-  },
-  beforeDestroy() {
-    this.authSub && this.authSub()
-  },
-  created() {
-    if (!this.isLoggedIn) this.$router.push('/login')
   },
 }
 </script>

@@ -1,15 +1,11 @@
 service cloud.firestore {
 	match /databases/{database}/documents {
-//service cloud.firestore {
-//match /databases/{database}/documents {
+// Default.rules
     match /{document=**} {
       allow read: if userHasRole('admin')
       allow write: if userHasRole('superadmin')
     }
-//}
-//}
-//service cloud.firestore {
-//match /databases/{database}/documents {
+// Helpers.rules
     // Is the user logged in?
     function isSignedIn() {
       return request.auth != null
@@ -139,10 +135,7 @@ service cloud.firestore {
     function currentUser() {
       return request.auth
     }
-//}
-//}
-//service cloud.firestore {
-//match /databases/{database}/documents {
+// Users.rules
     match /users/{userId} {
       allow list: if false
       allow get: if isSignedIn()
@@ -150,7 +143,5 @@ service cloud.firestore {
         && allowedFields(['email', 'fullname', 'image', 'roles', 'created'])
         && hasNotChanged(['email', 'image', 'roles', 'created']);
     }
-//}
-//}
   }
 }

@@ -11,9 +11,18 @@
 import Login from '~/components/Login'
 export default {
   metaInfo: {
-    title: 'Login | Firesome Headless CMS'
+    title: 'Login | Firesome Serverless CMS'
   },
-  components: { Login }
+  components: { Login },
+  sub: null,
+  watch: {
+    '$auth.isLoggedIn': {
+      immediate: true,
+      handler(loggedIn) {
+        if (loggedIn) this.$router.push('/dashboard')
+      }
+    },
+  },
 }
 </script>
 

@@ -9,15 +9,18 @@
           </el-input>
           <hr style="border: 1px solid #eeeeee;box-shadow:  0px 1px 10px;margin: 10px -10px;">
           <div class="scrollable">
-            <Stack :column-min-width="colWidth" :gutter-width="8" :gutter-height="8" :monitor-images-loaded="true">
-              <StackItem v-for="(img, i) in filtered" :key="i">
+            <StackGrid
+              :columnWidth="colWidth"
+              :gutterX="8"
+              :gutterY="8">
+              <div class="vsg-stack-item" v-for="(img, i) in filtered" :key="i">
                 <figure :class="{selected: img === selected, removing: img.removing}"
                   @click="selected = img">
                   <img :src="img.url">
-                  <figcaption>{{img.name || img.__file__.name}}</figcaption>
+                  <figcaption>{{img.name || img.file.name}}</figcaption>
                 </figure>
-              </StackItem>
-            </Stack>
+              </div>
+            </StackGrid>
           </div>
         </el-col>
         <el-col :span="4" :md="6" :sm="8" :xs="12">
@@ -40,7 +43,7 @@
             </el-upload>
             <hr />
             <div v-if="selected">
-              <h3>{{selected.name || selected.__file__.name}}</h3>
+              <h3>{{selected.name || selected.file.name}}</h3>
               <h4>{{selected.uploaded.toDate().toDateString()}} <el-button type="danger" icon="el-icon-delete" round @click="remove(selected)" v-loading="selected.removing" style="float: right"></el-button></h4>
               <h5>Dimensions: {{selected.size.w}} x {{selected.size.h}}</h5>
               <h5>Owner: {{auth.uid === selected.uid ? auth.displayName : '––––'}}</h5>
@@ -105,12 +108,12 @@
       }
 
       &:hover {
-        box-shadow: 0px 2px 20px rgb(135, 135, 255);
+        box-shadow: 0px 2px 20px #333333;
       }
 
       &.selected {
-        box-shadow: 0px 2px 20px rgb(135, 135, 255);
-        background: #3BBA95;
+        box-shadow: 0px 2px 20px #333333;
+        background: #2F80ED;
       }
 
       &.removing img {
@@ -130,15 +133,15 @@
 
 <script>
 import Upload from './bases/Upload'
-import { Stack, StackItem } from 'vue-stack-grid'
+import StackGrid from 'vue-stack-grid-component'
+import { setTimeout } from 'timers';
 
-let unsubscribe
 let delay
 export default {
   extends: Upload,
   name: 'Gallery',
   components: {
-    Stack, StackItem
+    StackGrid
   },
   data () {
     return {
@@ -152,7 +155,7 @@ export default {
     }
   },
   mounted () {
-    this.reload()
+    this.init()
   },
   computed: {
     gallery () {
@@ -177,12 +180,12 @@ export default {
       delay = setTimeout(() => {
         let q = this.query.toLowerCase()
         if (!q) this.filtered = this.images
-        let curSel = this.selected ? this.selected.__key__ : null
+        let curSel = this.selected ? this.selected.id : null
         this.selected = null
         this.filtered = this.images.filter(img => {
           if (!this.privateView !== !img.private) return false
-          if ((img.name || img.__file__.name).toLowerCase().includes(q)) {
-            if (curSel === img.__key__) this.selected = img
+          if ((img.name || img.file.name).toLowerCase().includes(q)) {
+            if (curSel === img.id) this.selected = img
             return true
           }
           return false
@@ -190,36 +193,39 @@ export default {
         this.$forceUpdate()
       }, 100)
     },
-    reload () {
-      if (unsubscribe) unsubscribe()
-      unsubscribe = this.$db.collection('media').orderBy('uploaded', 'desc').onSnapshot(snaps => {
-        this.images = snaps.docs.map(doc => {
-          const image = doc.data()
-          image.__ref__ = doc.ref
-          image.__file__ = this.$storage.ref(image.path)
-          image.__key__ = doc.id
-
-          return image
+    init () {
+      this.$bind(this.$db.collection('media').orderBy('uploaded', 'desc'), 'images', (images) => {
+        if (!images) return
+        images.forEach(img => {
+          img.file = this.$storage.ref(img.path)
         })
         this.onFilter()
         this.privateView = this.isPrivate
-      }, (err) => this.$notify({ type: 'warning', message: 'media: ' + err.message }))
+        this.colWidth = 219
+        setTimeout(() => {
+          this.colWidth = 220
+        }, 100)
+      })
     },
     remove (img) {
       img.removing = true
       var imgRef = this.$storage.ref(img.path);
 
-      imgRef.delete().catch((error) => {
-        console.warn(error.message)
-      }).then(() => {
-        img.__ref__.delete().then(() => {
-          this.$message({
-            message: 'Image deleted',
-            type: 'success'
-          })
-          this.selected = null
+      img.__ref__.delete().then(() => {
+        this.$message({
+          message: 'Image deleted',
+          type: 'success'
         })
-      });
+        this.selected = null
+      }).catch((error) => {
+        this.$message({
+          message: error.message,
+          type: 'warning'
+        })
+      })
+      /*imgRef.delete().catch((error) => {
+        console.warn(error.message)
+      })*/
     },
     changeName (img) {
       img.updating = true

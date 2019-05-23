@@ -14,7 +14,7 @@ import '~/assets/element-variables.scss'
 
 import '~/fire.js'
 
-export default function (Vue, { router, head, isClient }) {
+export default function (Vue, { router, head, isServer, isClient }) {
 
   Vue.use(ElementUI, { locale })
 
