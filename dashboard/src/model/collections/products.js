@@ -5,6 +5,14 @@ loadasync('attributes')
 loadasync('categories')
 loadasync('tags')
 
+const visibleOptions = {
+  0: 'Nowhere',
+  1: 'Directly',
+  2: 'Catalog',
+  3: 'Search',
+  4: 'Catalog & Search'
+}
+
 const products = {
   collection: 'products',
   singular: 'product',
@@ -23,12 +31,6 @@ const products = {
   }],
   fields: [
     {
-      key: '__key__',
-      label: 'ID',
-      type: 'hidden',
-      readonly: true
-    },
-    {
       key: 'sku',
       label: 'Sku',
       type: 'text',
@@ -42,20 +44,26 @@ const products = {
       ]
     },
     {
-      key: 'title',
-      label: 'Title',
+      key: '__key__',
+      label: 'ID',
+      type: 'hidden',
+      readonly: true
+    },
+    {
+      key: 'name',
+      label: 'Name',
       type: 'text',
       width: 120,
       rules: [
         {
           type: 'string',
           required: true,
-          message: 'Title is required'
+          message: 'Name is required'
         }
       ]
     },
     {
-      key: 'image',
+      key: 'img',
       label: 'Featured Image',
       type: 'image',
       width: 70
@@ -76,22 +84,25 @@ const products = {
       width: 120,
     },
     {
-      key: 'status',
-      label: 'Status',
-      type: 'select',
-      title: (field, val) => {
-        switch (val*1) {
-          case 0: return 'Draft'
-          case 1: return 'Published'
-        }
-      },
-      options: [
-        { value: '0', label: 'Draft' },
-        { value: '1', label: 'Published' }
-      ]
+      key: 'act',
+      label: 'Active',
+      type: 'boolean'
     },
     {
-      key: 'gallery',
+      key: 'vis',
+      label: 'Visible',
+      type: 'select',
+      default: 0,
+      title: (field, val) => {
+        return visibleOptions[val]
+      },
+      options: (() => Object.keys(visibleOptions).map(k => ({
+        value: k,
+        label: visibleOptions[k]
+      })))()
+    },
+    {
+      key: 'gall',
       label: 'Gallery',
       type: 'array',
       array: {
@@ -127,7 +138,7 @@ const products = {
       }
     },
     {
-      key: 'categories',
+      key: 'cats',
       label: 'Categories',
       type: 'array',
       width: 100,
@@ -146,7 +157,7 @@ const products = {
       }
     },
     {
-      key: 'attributes',
+      key: 'attrs',
       label: 'Attributes',
       type: 'map',
       width: 100,
