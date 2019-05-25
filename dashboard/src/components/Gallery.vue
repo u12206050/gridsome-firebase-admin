@@ -9,18 +9,7 @@
           </el-input>
           <hr style="border: 1px solid #eeeeee;box-shadow:  0px 1px 10px;margin: 10px -10px;">
           <div class="scrollable">
-            <StackGrid
-              :columnWidth="colWidth"
-              :gutterX="8"
-              :gutterY="8">
-              <div class="vsg-stack-item" v-for="(img, i) in filtered" :key="i">
-                <figure :class="{selected: img === selected, removing: img.removing}"
-                  @click="selected = img">
-                  <img :src="img.url" @load="imageLoaded">
-                  <figcaption>{{img.name || img.file.name}}</figcaption>
-                </figure>
-              </div>
-            </StackGrid>
+            <Grid :images="filtered" v-model="selected" />
           </div>
         </el-col>
         <el-col :span="4" :md="6" :sm="8" :xs="12">
@@ -86,41 +75,6 @@
     box-shadow: 0 -4px 10px -2px rgba(0, 0, 0, 0.1);
     position: relative;
   }
-  .vsg-stack-item {
-    figure {
-      margin: 0;
-      transition: .2s all;
-      box-shadow: 0px 2px 10px #ccc;
-      padding: 2px;
-      background: #000;
-      cursor: pointer;
-
-      figcaption {
-        color: #fff;
-        padding: 4px;
-        font-size: 15px;
-      }
-
-      img {
-        width: 100%;
-        max-width: 400px;
-        min-height: 50px;
-      }
-
-      &:hover {
-        box-shadow: 0px 2px 20px #333333;
-      }
-
-      &.selected {
-        box-shadow: 0px 2px 20px #333333;
-        background: #2F80ED;
-      }
-
-      &.removing img {
-        filter: grayscale(1);
-      }
-    }
-  }
 
   .el-upload {
     width:  100%;
@@ -133,24 +87,22 @@
 
 <script>
 import Upload from './bases/Upload'
-import StackGrid from 'vue-stack-grid-component'
+import Grid from './Grid'
 
 let delay
 export default {
   extends: Upload,
   name: 'Gallery',
   components: {
-    StackGrid
+    Grid
   },
   data () {
     return {
       images: [],
-      imagesLoaded: 0,
       filtered: [],
       query: '',
       uploaded: null,
       selected: null,
-      colWidth: 220,
       privateView: false
     }
   },
@@ -199,19 +151,9 @@ export default {
         images.forEach(img => {
           img.file = this.$storage.ref(img.path)
         })
-        this.imagesLoaded = images.length
         this.onFilter()
         this.privateView = this.isPrivate
-        this.colWidth = 219
       })
-    },
-    imageLoaded () {
-      if (--this.imagesLoaded < 1) {
-        this.imagesLoaded = 0
-        this.$nextTick(() => {
-          this.colWidth = 220
-        })
-      }
     },
     remove (img) {
       img.removing = true
