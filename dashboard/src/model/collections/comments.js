@@ -58,12 +58,6 @@ const comments = {
         }
       ]
     },
-    {
-      key: 'created',
-      label: 'Created',
-      type: 'datetime',
-      readonly: true
-    },
   ]
 }
 

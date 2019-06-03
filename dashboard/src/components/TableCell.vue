@@ -14,10 +14,26 @@
     </div>
   </el-popover>
 
+  <el-popover v-else-if="field.type === 'attributes'" trigger="hover" placement="top">
+    <div>
+      <p v-for="prop in Object.keys(cell)" :key="prop" style="display: flex">
+        <TableCell :field="field.map.key" :cell="prop" v-slot="{ doc }">
+          <span>: </span>
+          <TableCell :field="field.map.value(doc)" :cell="cell[prop]" />
+        </TableCell>
+      </p>
+    </div>
+    <div slot="reference" class="name-wrapper">
+      <el-tag size="medium">{{field.title(field, cell)}}</el-tag>
+    </div>
+  </el-popover>
+
   <el-popover v-else-if="field.type === 'map'" trigger="hover" placement="top">
     <div>
       <p v-for="prop in Object.keys(cell)" :key="prop" style="display: flex">
-        <TableCell :field="field.map.key" :cell="prop" />: <TableCell :field="field.map.value" :cell="cell[prop]" />
+        <TableCell :field="field.map.key" :cell="prop" />
+        <span>: </span>
+        <TableCell :field="typeof field.map.value === 'function' ? field.map.value(prop) : field.map.value" :cell="cell[prop]" />
       </p>
     </div>
     <div slot="reference" class="name-wrapper">
@@ -50,6 +66,7 @@
     <i v-if="cell && !refData" class="el-icon-loading"></i>
     <i v-else-if="!cell || typeof refData[field.reference.key] === 'undefined'" class="el-icon-minus"></i>
     <TableCell v-else :field="field.reference" :cell="refData[field.reference.key]"/>
+    <slot v-bind:doc="refData"></slot>
   </router-link>
 
   <el-popover v-else-if="field.type === 'textarea'" trigger="hover" placement="top" width="400">

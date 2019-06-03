@@ -37,8 +37,8 @@
             </g-link>
             <el-col :span="12" style="text-align: right; margin-right: 20px">
               <el-row type="flex" style="align-items: center;" justify="end">
-                <el-button type="text"><g-link to="/profile">{{authUser.displayName}}</g-link></el-button>
-                <el-button type="text" @click="logout" style="position: relative; z-index: 1999;"><i class="material-icons">lock_outline</i></el-button>
+                <el-button><g-link to="/profile">{{authUser.displayName}}</g-link></el-button>
+                <el-button type="text" size="small" @click="logout" style="position: relative; z-index: 1999;"><i class="material-icons">lock_outline</i></el-button>
               </el-row>
             </el-col>
           </el-row>
@@ -138,7 +138,6 @@ export default {
   display: flex;
 }
 
-
 .build-badge {
   margin: 14px 48px 0;
   float: right;
@@ -148,10 +147,6 @@ export default {
   background: #0D2538;
   padding: 6px 10px; height: 65px;
   box-shadow: 0 12px 10px -10px rgba(0,0,0,0.2);
-
-  a, i {
-    color: #fff
-  }
 }
 
 .el-footer.main {

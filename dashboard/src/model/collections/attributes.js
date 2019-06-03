@@ -2,7 +2,8 @@ import loadasync, { defs } from '~/model/loadasync'
 
 const typeOptions = {
   number: 'Number',
-  string: 'Text',
+  text: 'Text',
+  color: 'Color',
   boolean: 'True/False',
   date: 'Date'
 }
@@ -55,6 +56,16 @@ const attributes = {
           label: typeOptions[key]
         }
       }))()
+    },
+    {
+      key: 'filter',
+      label: 'Allow filtering',
+      type: 'boolean'
+    },
+    {
+      key: 'sort',
+      label: 'Allow sorting',
+      type: 'boolean'
     }
   ]
 }

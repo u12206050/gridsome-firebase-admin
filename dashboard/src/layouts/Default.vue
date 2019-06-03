@@ -7,8 +7,10 @@
             <g-image src="~/assets/logo-light.svg" width="120" height="49px" alt="Firesome Logo" class="logo"></g-image>
           </g-link>
           <el-row type="flex" justify="space-between">
-            <g-link v-if="loggedIn" to="/dashboard">Dashboard</g-link>
-            <g-link v-else to="/login">Login</g-link>
+            <el-button v-if="loggedIn">
+              <g-link to="/dashboard">Dashboard</g-link>
+            </el-button>
+            <Login v-else />
           </el-row>
         </el-row>
       </el-header>
@@ -30,7 +32,9 @@
 </template>
 
 <script>
+import Login from '~/components/Login'
 export default {
+  components: { Login },
   computed: {
     loggedIn() {
       return this.$auth.isLoggedIn
@@ -38,3 +42,10 @@ export default {
   }
 }
 </script>
+
+
+<style lang="scss">
+.Login {
+  margin: -12px 0;
+}
+</style>

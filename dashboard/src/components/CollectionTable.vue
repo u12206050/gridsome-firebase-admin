@@ -32,7 +32,7 @@
     <el-table ref="elTable" :data="page" @selection-change="onSelect" @row-dblclick="onRow" v-loading="!!loading" :row-class-name="tableRowClassName">
       <el-table-column type="selection" width="50"></el-table-column>
       <template v-for="(field, fIndex) in fields">
-        <el-table-column :key="fIndex" :width="field.width" :label="field.label" :prop="field.key" v-if="field.type !== 'hidden'">
+        <el-table-column :key="fIndex + field.key" :width="field.width" :label="field.label" :prop="field.key" v-if="field.type !== 'hidden'">
           <template slot-scope="scope">
             <i v-if="typeof scope.row[field.key] === 'undefined'" class="el-icon-minus"></i>
             <TableCell v-else :field="field" :cell="scope.row[field.key]" />

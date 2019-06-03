@@ -1,6 +1,6 @@
 <template>
-  <el-select v-if="!disabled" v-model="syncValue" v-loading="!docs" :filterable="true" :multiple="field.multiple" :placeholder="field.reference.label" :invalid="invalid">
-    <el-option v-for="(item, iIndex) in docs" :key="iIndex" :label="item.label" :value="item.value"></el-option>
+  <el-select v-if="!disabled" v-model="syncValue" v-loading="!options" :filterable="true" :multiple="field.multiple" :placeholder="field.reference.label" :invalid="invalid">
+    <el-option v-for="(item, iIndex) in options" :key="iIndex" :label="item.label" :value="item.value"></el-option>
   </el-select>
   <TableCell v-else :field="field" :cell="asDoc(syncValue)" />
 </template>
@@ -22,6 +22,7 @@ export default {
   },
   data () {
     return {
+      options: null,
       docs: null,
       unsub: null
     }
@@ -39,6 +40,9 @@ export default {
       },
       set(newValue) {
         this.$emit("input", newValue ? this.$db.doc(newValue) : null)
+        if (newValue && this.docs[newValue]) {
+          this.$emit('selected', this.docs[newValue])
+        }
       }
     },
     filter () {
@@ -56,11 +60,11 @@ export default {
           if (typeof ref === 'string') ref = this.$db.collection(this.$store.collectionPath(field.collection)).doc(ref)
           if (!ref.get) throw new Error(field.key + ': Is not a valid reference object')
           ref.get()
-            .then(doc => {
-              let data = doc.data()
-              data.__key__ = doc.id
-              data.__ref__ = doc.ref
-              resolve(this.loadRefField(field.reference, data, par || obj))
+            .then(snap => {
+              let doc = snap.data()
+              doc.__key__ = snap.id
+              doc.__ref__ = snap.ref
+              resolve(this.loadRefField(field.reference, doc, par || obj))
             })
             .catch(err => this.$message({ type: 'error', message: `Invalid ${ref.path} Reference Field` }));
         } else {
@@ -71,18 +75,25 @@ export default {
     loadDocs () {
       if (!this.disabled) {
         this.unsub = this.$db.collection(this.collectionPath).onSnapshot((querySnap) => {
-          this.docs = []
-          Promise.all(querySnap.docs.map(doc => {
-            let data = doc.data()
-            data.__key__ = doc.id
-            data.__ref__ = doc.ref
+          this.options = []
+          const docs = {}
+          Promise.all(querySnap.docs.map(snap => {
+            let doc = snap.data()
+            doc.__key__ = snap.id
+            doc.__ref__ = snap.ref
 
-            return this.loadRefField(this.field.reference, data).then(label => {
-              return { value: doc.ref.path, label: label }
+            return this.loadRefField(this.field.reference, doc).then(label => {
+              docs[snap.ref.path] = doc
+              return { value: snap.ref.path, label: label }
             })
           })).then(result => {
-            this.docs = result
-            this.docs.splice(0, 0, { value: '', label: 'Ingen' })
+            this.options = result
+            this.options.splice(0, 0, { value: '', label: 'Ingen' })
+            this.docs = docs
+            if (this.syncValue && this.docs[this.syncValue]) {
+              console.log(this.docs[this.syncValue])
+              this.$emit('selected', this.docs[this.syncValue])
+            }
           })
         }, (err) => this.$notify({ type: 'warning', message: this.collectionPath + ': ' + err.message }))
       }

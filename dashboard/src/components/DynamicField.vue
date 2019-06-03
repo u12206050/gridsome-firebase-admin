@@ -20,6 +20,8 @@
 
         <MapField v-else-if="field.type == 'map'" :doc="doc" :field="field.map" v-model="syncValue" :disabled="isDisabled" :invalid="isInvalid" />
 
+        <AttributeField v-else-if="field.type == 'attributes'" :doc="doc" :field="field.map" v-model="syncValue" :disabled="isDisabled" :invalid="isInvalid" />
+
         <el-time-select v-else-if="field.type == 'time'" v-model="syncValue" :picker-options="{start: '08:30', step: '00:15', end: '18:30'}" :placeholder="field.label" :disabled="isDisabled" :invalid="isInvalid"></el-time-select>
 
         <el-switch v-else-if="field.type == 'boolean'" v-model="syncValue" :disabled="isDisabled"></el-switch>
@@ -75,6 +77,7 @@ export default {
     ChooseLocation: (() => import('~/components/ChooseLocation')),
     TimestampInput: (() => import('~/components/TimestampInput')),
     MapField: (() => import('~/components/MapField')),
+    AttributeField: (() => import('~/components/AttrField')),
     ReferenceInput: (() => import('~/components/ReferenceInput')),
   },
   props: {

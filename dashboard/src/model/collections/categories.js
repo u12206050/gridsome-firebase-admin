@@ -31,6 +31,16 @@ const categories = {
       ]
     },
     {
+      key: 'act',
+      label: 'Active',
+      type: 'boolean'
+    },
+    {
+      key: 'menu',
+      label: 'Show in Menu',
+      type: 'boolean'
+    },
+    {
       key: 'info',
       label: 'Info',
       type: 'textarea',

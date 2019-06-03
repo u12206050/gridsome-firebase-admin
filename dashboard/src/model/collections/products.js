@@ -159,7 +159,8 @@ const products = {
     {
       key: 'attrs',
       label: 'Attributes',
-      type: 'map',
+      type: 'attributes',
+      extends: 'map',
       width: 100,
       title (field, obj) {
         return Object.keys(obj).length
@@ -187,18 +188,21 @@ const products = {
             type: 'text'
           }
         },
-        value: {
-          key: '__index__',
-          label: '',
-          type: 'text'
+        value (doc) {
+          if (!doc) return {
+            key: '__index__',
+            label: '',
+            type: ''
+          }
+
+          const { label, type } = doc
+          return {
+            key: '__index__',
+            label,
+            type
+          }
         }
       }
-    },
-    {
-      key: 'created',
-      label: 'Created',
-      type: 'datetime',
-      readonly: true
     },
   ]
 }
