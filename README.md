@@ -29,6 +29,10 @@ To **compile** run `npm run compile`
 
 To **deploy** run `npm run deploy`
 
+## Models
+
+Easily define your data structure and start adding documents immediately. [Read More](https://github.com/u12206050/gridsome-firebase-admin/blob/master/dashboard/src/model/README.md)
+
 
 ## Directory Setup
 
