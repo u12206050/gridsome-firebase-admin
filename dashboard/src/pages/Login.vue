@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <div class="Page Page-Login">
-      <h1>Login || Register</h1>
+      <h1>Login or Register</h1>
       <Login />
     </div>
   </Layout>

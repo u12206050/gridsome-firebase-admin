@@ -42,7 +42,7 @@
 
             <el-button @click.prevent="syncValue.splice(index,1)" type="text" icon="el-icon-close" class="remove-field"></el-button>
           </el-form-item>
-          <el-button type="text" icon="el-icon-plus" @click.prevent="syncValue.add" :disabled="isDisabled">Legg til {{field.array ? field.array.label || field.label : field.label}}</el-button>
+          <el-button type="text" icon="el-icon-plus" @click.prevent="syncValue.add" :disabled="isDisabled">Add {{field.array ? field.array.label || field.label : field.label}}</el-button>
         </span>
 
         <div v-else-if="field.type == 'object'" class="objectfields">
@@ -72,13 +72,13 @@ import Schema from "async-validator";
 export default {
   name: 'DynamicField',
   components: {
-    TipTap: (() => import('~/components/TipTapField')),
-    ImageField: (() => import('~/components/ImageField')),
-    ChooseLocation: (() => import('~/components/ChooseLocation')),
-    TimestampInput: (() => import('~/components/TimestampInput')),
-    MapField: (() => import('~/components/MapField')),
-    AttributeField: (() => import('~/components/AttrField')),
-    ReferenceInput: (() => import('~/components/ReferenceInput')),
+    TipTap: () => import('~/components/TipTapField'),
+    ImageField: () => import('~/components/ImageField'),
+    ChooseLocation: () => import('~/components/ChooseLocation'),
+    TimestampInput: () => import('~/components/TimestampInput'),
+    MapField: () => import('~/components/MapField'),
+    AttributeField: () => import('~/components/AttrField'),
+    ReferenceInput: () => import('~/components/ReferenceInput'),
   },
   props: {
     value: { required: true },

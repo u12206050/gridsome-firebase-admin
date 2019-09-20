@@ -18,12 +18,20 @@ const COLLECTION_NAMES = [
 ]
 
 module.exports = function (api) {
+
+
+  api.createPages(({ createPage }) => {
+    createPage({
+      path: `/:collection(.+)`,
+      component: './src/templates/Collections.vue'
+    })
+  })
+
   api.loadSource(store => {
     // Use the Data store API here: https://gridsome.org/docs/data-store-api
 
-    const collections = store.addContentType({
-      typeName: 'Collections',
-      route: ':collection*'
+    const collections = store.addCollection({
+      typeName: 'Collections'
     })
 
     COLLECTION_NAMES.forEach(cName => {

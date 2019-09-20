@@ -32,8 +32,8 @@
       <el-container style="background-color: #f3f3f3">
         <el-header class="secondary-theme main">
           <el-row type="flex" justify="space-between">
-            <g-link to="/" style="height: 40px; display: inline-block">
-              <g-image src="~/assets/logo-light.svg" width="120" height="49px" alt="Firesome Logo" class="logo"></g-image>
+            <g-link to="/">
+              <g-image src="~/assets/logo-light.svg" width="120" alt="Firesome Logo" class="logo"></g-image>
             </g-link>
             <el-col :span="12" style="text-align: right; margin-right: 20px">
               <el-row type="flex" style="align-items: center;" justify="end">
@@ -145,7 +145,8 @@ export default {
 
 .el-header.main {
   background: #0D2538;
-  padding: 6px 10px; height: 65px;
+  padding: 6px 10px;
+  height: 64px;
   box-shadow: 0 12px 10px -10px rgba(0,0,0,0.2);
 }
 
@@ -172,13 +173,13 @@ export default {
 
   &.el-sidemenu-head {
     display: flex;
-    height: 65px;
+    height: 60px;
     border-bottom: 1px solid #c3bcae;
 
     .avatar {
       margin: 0;
       width: 64px;
-      height: 64px;
+      height: 60px;
       object-fit: cover;
     }
   }

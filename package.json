@@ -8,6 +8,7 @@
   },
   "devDependencies": {},
   "scripts": {
+    "start": "cd dashboard && npm start",
     "compile": "firestore-rulez",
     "deploy": "firestore-rulez && firebase deploy --only firestore:rules"
   },

@@ -40,7 +40,7 @@ export default function (Vue, { router, head, isServer, isClient }) {
     href: 'https://unpkg.com/vue-notifyjs/themes/material.css'
   }, {
     rel: 'stylesheet',
-    href: 'https://cdn.firebase.com/libs/firebaseui/3.6.0/firebaseui.css'
+    href: 'https://cdn.firebase.com/libs/firebaseui/4.2.0/firebaseui.css'
   })
 
   head.script.push({

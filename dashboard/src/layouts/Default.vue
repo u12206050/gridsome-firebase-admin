@@ -3,14 +3,16 @@
     <el-container>
       <el-header class="secondary-theme main">
         <el-row type="flex" justify="space-between" align="middle">
-          <g-link to="/" style="height: 40px; display: inline-block">
-            <g-image src="~/assets/logo-light.svg" width="120" height="49px" alt="Firesome Logo" class="logo"></g-image>
+          <g-link to="/">
+            <g-image src="~/assets/logo-light.svg" width="120" alt="Firesome Logo" class="logo"></g-image>
           </g-link>
           <el-row type="flex" justify="space-between">
             <el-button v-if="loggedIn">
               <g-link to="/dashboard">Dashboard</g-link>
             </el-button>
-            <Login v-else />
+            <el-button v-else>
+              <g-link to="/login">Login</g-link>
+            </el-button>
           </el-row>
         </el-row>
       </el-header>

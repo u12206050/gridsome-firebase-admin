@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "element-ui": "^2.8.2",
-    "firebase": "^5.11.0",
-    "firebaseui": "^3.6.0",
-    "gridsome": "^0.6.2",
+    "firebase": "^6.6.1",
+    "firebaseui": "^4.2.0",
+    "gridsome": "^0.7.3",
     "jvectormap-next": "^3.0.0",
     "lodash.isequal": "^4.5.0",
     "tiptap": "^1.19.8",

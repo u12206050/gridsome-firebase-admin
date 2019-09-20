@@ -35,6 +35,7 @@ export default {
   computed: {
     selected () {
       const { collection } = this.$route.params
+      console.log(collection)
 
       const parts = collection.split('/')
 

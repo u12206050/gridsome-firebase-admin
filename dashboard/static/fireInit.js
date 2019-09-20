@@ -25,36 +25,12 @@ var fireInit = function() {
   loadScriptAsync({
     rel: 'javascript',
     name: 'firebase-app.js',
-    src: 'https://www.gstatic.com/firebasejs/5.11.1/firebase-app.js'
-  }).then(function () {
-    return loadScriptAsync({
-      rel: 'javascript',
-      name: 'firebase-auth.js',
-      src: 'https://www.gstatic.com/firebasejs/5.11.1/firebase-auth.js'
-    })
-  }).then(function () {
-    return loadScriptAsync({
-      rel: 'javascript',
-      name: 'firebase-firestore.js',
-      src: 'https://www.gstatic.com/firebasejs/5.11.1/firebase-firestore.js'
-    })
-  }).then(function () {
-    return loadScriptAsync({
-      rel: 'javascript',
-      name: 'firebase-functions.js',
-      src: 'https://www.gstatic.com/firebasejs/5.11.1/firebase-functions.js'
-    })
-  }).then(function () {
-    return loadScriptAsync({
-      rel: 'javascript',
-      name: 'firebase-storage.js',
-      src: 'https://www.gstatic.com/firebasejs/5.11.1/firebase-storage.js'
-    })
+    src: 'https://www.gstatic.com/firebasejs/6.6.1/firebase.js'
   }).then(function () {
     return loadScriptAsync({
       rel: 'javascript',
       name: 'firebaseui.js',
-      src: 'https://cdn.firebase.com/libs/firebaseui/3.6.0/firebaseui.js'
+      src: 'https://cdn.firebase.com/libs/firebaseui/4.2.0/firebaseui.js'
     })
   }).then(function () {
     console.log(`%c Firebase loaded in ${Date.now() - started}ms`, 'background: #ffcb2c; color: #f5820b');

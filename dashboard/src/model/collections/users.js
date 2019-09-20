@@ -9,7 +9,7 @@ const users = {
   icon: 'el-icon-user',
   actions: {
     canCreate: false,
-    canDelete: false
+    canDelete: true
   },
   fields: [
     {

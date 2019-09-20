@@ -4,7 +4,7 @@
       <el-row :gutter="20">
         <el-col :span="20" :md="18" :sm="16" :xs="12" class="main">
           <el-input placeholder="Søk" v-model="query" @input="onFilter">
-            <el-checkbox slot="prepend" v-model="privateView" @change="onFilter">Bruker bilder</el-checkbox>
+            <el-checkbox slot="prepend" v-model="privateView" @change="onFilter">User Images</el-checkbox>
             <span slot="append">{{filtered.length}} / {{images.length}}</span>
           </el-input>
           <hr style="border: 1px solid #eeeeee;box-shadow:  0px 1px 10px;margin: 10px -10px;">
