@@ -2,6 +2,8 @@
 
 Headless CMS built on Gridsome and Firebase's Firestore
 
+**[DEMO](https://gridsome-firestore-starter.firebaseapp.com/)**
+
 
 ## Setup
 
@@ -13,12 +15,18 @@ Headless CMS built on Gridsome and Firebase's Firestore
 
 ### Firesome CMS Setup
 
-  1. Copy and rename the `.env.example` file to `.env` and update it with your Firebase credentials
+  1. `cd dashboard`
+  2. Copy and rename the `.env.example` file to `.env` and update it with your Firebase credentials
 
 
 ### Functions
 
 To deploy simple run in the root `firebase deploy --only functions``
+
+Functions include
+
+  1. Auto optimizing uploaded images
+  2. Adding user roles to be used with rules
 
 
 ### Rules

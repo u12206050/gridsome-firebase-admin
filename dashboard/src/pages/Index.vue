@@ -14,7 +14,7 @@
             <h3>Document editor and viewer</h3>
             <g-image style="max-width: 100%; max-height: 85vh; margin: 1rem auto; object-fit: contain; display: block" src="~/assets/screenshots/doc-edit.png"></g-image>
           </div>
-          <pre style="font-size: 11px; background: #242424; color: #fff; padding: 11px; width: 340px; margin: 1rem auto; ">
+          <pre style="background: #242424; color: #fff; padding: 11px; width: 360px; margin: 1rem auto; ">
 // model/collections/posts.js
 
 ...

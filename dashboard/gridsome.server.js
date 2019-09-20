@@ -19,7 +19,6 @@ const COLLECTION_NAMES = [
 
 module.exports = function (api) {
 
-
   api.createPages(({ createPage }) => {
     createPage({
       path: `/:collection(.+)`,
@@ -30,12 +29,5 @@ module.exports = function (api) {
   api.loadSource(store => {
     // Use the Data store API here: https://gridsome.org/docs/data-store-api
 
-    const collections = store.addCollection({
-      typeName: 'Collections'
-    })
-
-    COLLECTION_NAMES.forEach(cName => {
-      collections.addNode({ collection: cName })
-    })
   })
 }
