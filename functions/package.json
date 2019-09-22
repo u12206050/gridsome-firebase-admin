@@ -1,5 +1,5 @@
 {
-  "name": "firesome/functions",
+  "name": "firesome-functions",
   "scripts": {
     "lint": "tslint --project tsconfig.json",
     "build": "tsc",
@@ -16,7 +16,7 @@
   "dependencies": {
     "firebase-admin": "~7.0.0",
     "firebase-functions": "^2.3.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "sharp": "^0.22.1"
   },
   "devDependencies": {

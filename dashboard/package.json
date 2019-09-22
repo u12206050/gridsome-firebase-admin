@@ -1,5 +1,5 @@
 {
-  "name": "firesome/dashboard",
+  "name": "firesome-dashboard",
   "private": true,
   "scripts": {
     "start": "gridsome develop",

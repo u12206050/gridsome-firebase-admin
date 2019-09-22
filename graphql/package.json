@@ -1,5 +1,5 @@
 {
-  "name": "firesome/graphql",
+  "name": "firesome-graphql",
   "version": "0.0.1",
   "description": "Graphql Server for Firesome",
   "main": "index.js",
