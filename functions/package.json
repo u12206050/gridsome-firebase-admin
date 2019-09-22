@@ -1,5 +1,5 @@
 {
-  "name": "functions",
+  "name": "firesome/functions",
   "scripts": {
     "lint": "tslint --project tsconfig.json",
     "build": "tsc",

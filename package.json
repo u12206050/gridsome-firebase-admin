@@ -1,5 +1,5 @@
 {
-  "name": "gridsome-firebase-admin",
+  "name": "firesome",
   "version": "0.1.0",
   "description": "A Firestore Headless CMS built on Gridsome",
   "main": "dashboard",

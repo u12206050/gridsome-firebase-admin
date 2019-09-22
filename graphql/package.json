@@ -1,0 +1,15 @@
+{
+  "name": "firesome/graphql",
+  "version": "0.0.1",
+  "description": "Graphql Server for Firesome",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gerard Lamusse",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server": "^2.9.3",
+    "graphql": "^14.5.7"
+  }
+}
