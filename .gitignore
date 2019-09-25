@@ -10,7 +10,7 @@ yarn-error.log*
 firebase-debug.log*
 
 # Firebase hosting
-/public
+/public/*
 
 # Firebase cache
 .firebase/
