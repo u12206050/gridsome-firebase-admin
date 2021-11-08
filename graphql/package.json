@@ -9,7 +9,7 @@
   "author": "Gerard Lamusse",
   "license": "MIT",
   "dependencies": {
-    "apollo-server": "^2.14.2",
+    "apollo-server": "^2.25.3",
     "graphql": "^14.5.7"
   }
 }
