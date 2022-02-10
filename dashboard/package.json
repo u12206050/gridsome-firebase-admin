@@ -27,7 +27,7 @@
     "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "sass-loader": "^7.1.0",
     "style-resources-loader": "^1.2.1"
   }
